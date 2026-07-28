@@ -1,0 +1,116 @@
+.address-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.address-form__row--street {
+  grid-template-columns: 1fr 2fr 1fr;
+}
+
+.address-form__row--quarters {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.address-form__row--address-locality {
+  grid-template-columns: 1fr 2fr 2fr;
+}
+
+.address-form__row--single {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 40rem) {
+  .address-form__row,
+  .address-form__row--street,
+  .address-form__row--quarters,
+  .address-form__row--address-locality,
+  .address-form__row--single {
+    grid-template-columns: 1fr;
+  }
+}
+
+.address-form__select {
+  cursor: pointer;
+}
+
+.address-form__optional {
+  font-weight: 400;
+  color: var(--text);
+}
+
+.address-form__address {
+  margin: 0;
+  padding: 0rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.address-form__address-legend {
+  padding: 0 0.25rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.address-form__address-help {
+  /*margin: 0 0 0.75rem;*/
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.address-form__gps-help {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.address-form__gps-action-row {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.address-form__maps-action {
+  display: flex;
+  min-width: 0;
+}
+
+.address-form__maps-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: var(--auth-form-control-min-height);
+  padding: 0 0.5rem;
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-h);
+  text-align: center;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.address-form__maps-link:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.address-form__maps-link:disabled,
+.address-form__maps-link[aria-disabled='true'] {
+  color: var(--text);
+  text-decoration: none;
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (max-width: 40rem) {
+  .address-form__gps-action-row {
+    grid-template-columns: 1fr;
+  }
+}

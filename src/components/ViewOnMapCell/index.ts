@@ -1,0 +1,1 @@
+export { ViewOnMapCell } from './ViewOnMapCell'

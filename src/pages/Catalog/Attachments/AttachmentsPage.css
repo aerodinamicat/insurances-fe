@@ -1,0 +1,97 @@
+.attachments-table__code {
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: var(--text-sm);
+}
+
+.attachments-table__filename {
+  display: block;
+  max-width: 16rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.attachments-table__extension {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: var(--text-2xs);
+  color: var(--text);
+}
+
+.catalog-badge--parent {
+  color: var(--badge-blue-text);
+  background: var(--badge-blue-bg);
+  border-color: var(--badge-blue-border);
+}
+
+.attachments-table__parent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.attachments-form__parent-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.attachments-form__clear-parent {
+  justify-self: flex-start;
+  margin-top: -0.35rem;
+}
+
+.attachments-form__document-row,
+.attachments-form__date-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+@media (max-width: 32rem) {
+  .attachments-form__document-row,
+  .attachments-form__date-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.attachments-form__hint {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.attachments-form__file-input {
+  padding: 0.35rem;
+}
+
+.attachments-form__file-meta {
+  margin: 0.35rem 0 0;
+  font-size: var(--text-sm);
+  color: var(--text-h);
+}
+
+.attachments-form__readonly-meta {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: var(--text-sm);
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.attachments-form__readonly-meta p {
+  margin: 0;
+}
+
+.attachments-form__readonly-meta p + p {
+  margin-top: 0.35rem;
+}
+
+.attachments-form__readonly-label {
+  font-weight: 600;
+  color: var(--text-h);
+  margin-right: 0.35rem;
+}

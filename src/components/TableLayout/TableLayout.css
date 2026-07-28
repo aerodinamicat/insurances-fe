@@ -1,0 +1,228 @@
+.table-layout-root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.33rem;
+}
+
+.table-layout-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text);
+  font-size: var(--text-sm);
+}
+
+.table-layout-filter label,
+.table-layout-pagination__page-size span {
+  font-size: var(--text-sm);
+  /*font-weight: 600;*/
+  /*color: var(--text-h);*/
+}
+
+.table-layout-filter input,
+.table-layout-pagination select,
+.table-layout-pagination input {
+  font: inherit;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.table-layout-filter input {
+  width: min(100%, 24rem);
+  padding: 0.25rem 0.75rem;
+}
+
+.table-layout-filter input:focus,
+.table-layout-pagination select:focus,
+.table-layout-pagination input:focus {
+  outline: 2px solid var(--text-h);
+  outline-offset: 1px;
+}
+
+.table-layout-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  color: var(--text);
+  font-size: var(--text-sm);
+}
+
+.table-layout-pagination__summary {
+  min-width: 12rem;
+}
+
+.table-layout-pagination__page-size,
+.table-layout-pagination__page-jump,
+.table-layout-pagination__controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.table-layout-pagination select {
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+}
+
+.table-layout-pagination input {
+  width: 4rem;
+  padding: 0.25rem 0.45rem;
+  text-align: center;
+}
+
+.table-layout-pagination__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text-h);
+  font: inherit;
+  font-size: var(--text-md);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.table-layout-pagination__button:hover:not(:disabled) {
+  background: var(--code-bg);
+}
+
+.table-layout-pagination__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.table-layout-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--code-bg);
+}
+
+.table-layout {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.table-layout th,
+.table-layout td {
+  padding: 0.3rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.table-layout th {
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.table-layout__sort-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.table-layout__sort-button:hover {
+  color: var(--text-h);
+}
+
+.table-layout__sort-icon {
+  color: var(--text-h);
+  font-size: var(--text-sm);
+  line-height: 1;
+}
+
+.table-layout tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table-layout tbody tr:hover {
+  background: color-mix(in srgb, var(--bg) 35%, transparent);
+}
+
+.table-layout__actions {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.table-layout th.table-layout__actions .table-layout__sort-button {
+  white-space: nowrap;
+}
+
+.row-actions {
+  display: flex;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.row-actions button {
+  padding: 0.3rem 0.55rem;
+  font-size: var(--text-sm);
+}
+
+.table-layout__empty {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--text);
+}
+
+.table-layout__highlight {
+  padding: 0 0.05em;
+  border-radius: 2px;
+  background: var(--search-highlight-bg);
+  color: var(--search-highlight-text);
+}
+
+.table-layout__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 40rem) {
+  .table-layout-filter input {
+    width: 100%;
+  }
+
+  .table-layout-pagination {
+    align-items: stretch;
+  }
+
+  .table-layout-pagination,
+  .table-layout-pagination__page-size,
+  .table-layout-pagination__controls {
+    width: 100%;
+  }
+
+  .table-layout-pagination__controls {
+    justify-content: space-between;
+  }
+}

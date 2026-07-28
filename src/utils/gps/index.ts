@@ -1,0 +1,16 @@
+export {
+  buildGoogleMapsSearchUrl,
+  getGpsCoordinatesLinkState,
+  getGpsCoordinatesValidationError,
+  GOOGLE_MAPS_SEARCH_BASE_URL,
+  GPS_COORDINATES_INPUT_PATTERN,
+  GPS_ERROR_MESSAGES,
+  isValidGpsCoordinates,
+  isValidGpsCoordinatesInput,
+  normalizeGpsCoordinates,
+  normalizeGpsCoordinatesResult,
+  parseGpsCoordinates,
+  type GpsCoordinatesLinkState,
+  type GpsCoordinatesNormalizationResult,
+  type ParsedGpsCoordinates,
+} from './gps-coordinates'

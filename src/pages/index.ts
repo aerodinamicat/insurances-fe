@@ -1,0 +1,6 @@
+export { ChangePasswordPage } from './ChangePassword/ChangePasswordPage'
+export { ConfirmEmailPage } from './ConfirmEmail/ConfirmEmailPage'
+export { OnboardingPage } from './Onboarding/OnboardingPage'
+export { UsersPage } from './Backoffice/Users/UsersPage'
+export { LoginPage } from './Login/LoginPage'
+export { ProfilePage } from './Profile/ProfilePage'

@@ -1,0 +1,64 @@
+.catalog-badge--branch {
+  color: var(--badge-violet-text);
+  background: var(--badge-violet-bg);
+  border-color: var(--badge-violet-border);
+}
+
+.catalog-badge--status.catalog-badge--vigente {
+  color: var(--badge-green-text);
+  background: var(--badge-green-bg);
+  border-color: var(--badge-green-border);
+}
+
+.catalog-badge--status.catalog-badge--en-renovacion {
+  color: var(--badge-amber-text);
+  background: var(--badge-amber-bg);
+  border-color: var(--badge-amber-border);
+}
+
+.catalog-badge--status.catalog-badge--cancelada {
+  color: var(--badge-red-text);
+  background: var(--badge-red-bg);
+  border-color: var(--badge-red-border);
+}
+
+.insurance-policies-table__company {
+  max-width: 14rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.insurance-policies-table td {
+  white-space: nowrap;
+}
+
+.insurance-policies-form__row--full {
+  grid-template-columns: 1fr;
+}
+
+.insurance-policies-form__cancellation {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.insurance-policies-form__legend {
+  padding: 0 0.35rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.insurance-policies-form__hint {
+  margin: 0 0 0.75rem;
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.insurance-policies-form__textarea {
+  min-height: 4.5rem;
+  resize: vertical;
+}

@@ -1,0 +1,84 @@
+.catalog-modal {
+  width: min(100%, 40rem);
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--code-bg);
+  color: var(--text);
+  box-shadow: var(--shadow-modal);
+}
+
+.catalog-modal::backdrop {
+  background: var(--overlay-backdrop);
+}
+
+.catalog-modal__inner {
+  padding: 1.5rem;
+}
+
+.catalog-modal__title {
+  margin: 0 0 1.25rem;
+  font-family: var(--heading);
+  font-weight: 500;
+  font-size: var(--text-lg);
+  color: var(--text-h);
+}
+
+.catalog-modal__description {
+  margin: 0 0 1.25rem;
+  font-size: var(--text-md);
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.catalog-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.catalog-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.catalog-modal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.85rem;
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  line-height: 1.3;
+}
+
+.catalog-modal-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.catalog-modal-btn--primary {
+  color: var(--bg);
+  background: var(--text-h);
+  border-color: var(--text-h);
+}
+
+.catalog-modal-btn--primary:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.catalog-modal-btn--secondary {
+  color: var(--text-h);
+  background: var(--bg);
+}
+
+.catalog-modal-btn--secondary:hover:not(:disabled) {
+  background: var(--code-bg);
+}

@@ -1,0 +1,15 @@
+.catalog-badge--particular {
+  color: var(--badge-blue-text);
+  background: var(--badge-blue-bg);
+  border-color: var(--badge-blue-border);
+}
+
+.catalog-badge--empresa {
+  color: var(--badge-violet-text);
+  background: var(--badge-violet-bg);
+  border-color: var(--badge-violet-border);
+}
+
+.customers-form__type-readonly {
+  padding-top: 0.1rem;
+}

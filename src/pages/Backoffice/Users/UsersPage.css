@@ -1,0 +1,89 @@
+.users-table__identity {
+  display: inline;
+  max-width: 100%;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.users-table__identity-separator {
+  color: var(--text);
+}
+
+.users-table__email {
+  color: var(--text);
+  font-size: var(--text-sm);
+}
+
+.users-table__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.users-table__session-cell {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.catalog-badge--user-role {
+  color: var(--text-h);
+  background: var(--bg);
+}
+
+.catalog-badge--you {
+  margin-left: 0.35rem;
+  color: var(--text-h);
+  background: var(--bg);
+}
+
+.catalog-badge--onboarding-pending {
+  color: var(--badge-amber-text);
+  background: var(--badge-amber-bg);
+  border-color: var(--badge-amber-border);
+}
+
+.catalog-badge--email-confirmed {
+  color: var(--badge-green-text);
+  background: var(--badge-green-bg);
+  border-color: var(--badge-green-border);
+}
+
+.catalog-badge--must-change-password {
+  color: var(--badge-amber-warm-text);
+  background: var(--badge-amber-warm-bg);
+  border-color: var(--badge-amber-warm-border);
+}
+
+.catalog-badge--session-active {
+  color: var(--badge-green-text);
+  background: var(--badge-green-bg);
+  border-color: var(--badge-green-border);
+}
+
+.catalog-badge--session-inactive {
+  color: var(--text);
+  background: var(--bg);
+}
+
+.catalog-badge--login-disabled {
+  color: var(--badge-red-text);
+  background: var(--badge-red-bg);
+  border-color: var(--badge-red-border);
+}
+
+.users-form__hint {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.auth-form__input--valid {
+  border-color: var(--color-valid-border) !important;
+}

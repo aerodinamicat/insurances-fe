@@ -1,0 +1,179 @@
+.insured-assets-table__identifier {
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: var(--text-sm);
+}
+
+.table-layout-wrap:has(.insured-assets-table) {
+  overflow-x: hidden;
+}
+
+.insured-assets-table {
+  table-layout: fixed;
+  width: 100%;
+  min-width: 0;
+}
+
+.insured-assets-table th.table-layout__actions,
+.insured-assets-table td.table-layout__actions {
+  width: auto;
+  white-space: nowrap;
+}
+
+.insured-assets-table__actions-col {
+  width: 17%;
+}
+
+.insured-assets-table__actions-col .row-actions {
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.insured-assets-table__policy-col {
+  width: 17%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.insured-assets-table__insured-sum-col {
+  width: 10%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.insured-assets-table__type-col {
+  width: 9%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.insured-assets-table__detail-col {
+  width: 44%;
+  overflow: hidden;
+}
+
+.insured-assets-table__map-col {
+  width: 6%;
+}
+
+.catalog-badge--automovil {
+  color: var(--badge-blue-text);
+  background: var(--badge-blue-bg);
+  border-color: var(--badge-blue-border);
+}
+
+.catalog-badge--inmueble,
+.catalog-badge--instalacion {
+  color: var(--badge-amber-text);
+  background: var(--badge-amber-bg);
+  border-color: var(--badge-amber-border);
+}
+
+.catalog-badge--invernadero {
+  color: var(--badge-green-text);
+  background: var(--badge-green-bg);
+  border-color: var(--badge-green-border);
+}
+
+.catalog-badge--sac {
+  color: var(--badge-violet-text);
+  background: var(--badge-violet-bg);
+  border-color: var(--badge-violet-border);
+}
+
+.catalog-badge--personas {
+  color: var(--badge-pink-text);
+  background: var(--badge-pink-bg);
+  border-color: var(--badge-pink-border);
+}
+
+.insured-assets-form__row--summary {
+  grid-template-columns: 2fr 2fr 1fr;
+}
+
+@media (max-width: 32rem) {
+  .insured-assets-form__row--summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+.insured-assets-form__section {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.insured-assets-form__legend {
+  padding: 0 0.35rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.insured-assets-form__hint {
+  margin: 0.35rem 0 0;
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.insured-assets-multiselect {
+  position: relative;
+}
+
+.insured-assets-multiselect__hint {
+  margin: 0 0 0.75rem;
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.insured-assets-multiselect__selected {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  list-style: none;
+}
+
+.insured-assets-multiselect__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.45rem;
+  font-size: var(--text-sm);
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+.insured-assets-multiselect__chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  font-size: var(--text-md);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.insured-assets-multiselect__chip-remove:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--text) 15%, transparent);
+}
+
+.insured-assets-multiselect__list {
+  position: static;
+  margin-top: 0.35rem;
+  box-shadow: none;
+}

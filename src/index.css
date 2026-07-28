@@ -1,0 +1,202 @@
+:root {
+  /* ——— Base ——— */
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --btn-add-bg: #15803d;
+  --btn-add-border: #15803d;
+  --btn-add-text: #fff;
+  --btn-add-bg-hover: #166534;
+  --btn-add-border-hover: #166534;
+  --auth-form-control-min-height: 2.5rem;
+
+  /* ——— Typography (rem; 1rem = root 18px) ——— */
+  --text-2xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.25rem;
+
+  /* ——— Semantic: danger ——— */
+  --color-danger-text: #991b1b;
+  --color-danger-bg: #fef2f2;
+  --color-danger-border: #fecaca;
+  --color-danger-input-border: #dc2626;
+  --color-danger-field-text: #b91c1c;
+
+  /* ——— Semantic: success ——— */
+  --color-success-text: #166534;
+  --color-success-bg: #f0fdf4;
+  --color-success-border: #bbf7d0;
+  --color-success-surface: #dcfce7;
+  --color-success-accent: #22c55e;
+
+  /* ——— Validation & search ——— */
+  --color-valid-border: #16a34a;
+  --search-highlight-bg: #fef08a;
+  --search-highlight-text: #713f12;
+
+  /* ——— Overlays & shadows ——— */
+  --overlay-backdrop: rgb(0 0 0 / 45%);
+  --shadow-modal: 0 8px 32px rgb(0 0 0 / 18%);
+  --shadow-dropdown: 0 8px 24px rgb(0 0 0 / 12%);
+  --shadow-dialog: 0 20px 45px rgb(0 0 0 / 25%);
+
+  /* ——— Badge palette ——— */
+  --badge-blue-text: #1e40af;
+  --badge-blue-bg: #eff6ff;
+  --badge-blue-border: #bfdbfe;
+
+  --badge-teal-text: #065f46;
+  --badge-teal-bg: #ecfdf5;
+  --badge-teal-border: #a7f3d0;
+
+  --badge-green-text: var(--color-success-text);
+  --badge-green-bg: var(--color-success-bg);
+  --badge-green-border: var(--color-success-border);
+
+  --badge-amber-text: #92400e;
+  --badge-amber-bg: #fffbeb;
+  --badge-amber-border: #fde68a;
+
+  --badge-amber-warm-text: #92400e;
+  --badge-amber-warm-bg: #fff7ed;
+  --badge-amber-warm-border: #fed7aa;
+
+  --badge-orange-text: #9a3412;
+  --badge-orange-bg: #fff7ed;
+  --badge-orange-border: #fed7aa;
+
+  --badge-violet-text: #5b21b6;
+  --badge-violet-bg: #f5f3ff;
+  --badge-violet-border: #ddd6fe;
+
+  --badge-red-text: var(--color-danger-text);
+  --badge-red-bg: var(--color-danger-bg);
+  --badge-red-border: var(--color-danger-border);
+
+  --badge-pink-text: #9d174d;
+  --badge-pink-bg: #fdf2f8;
+  --badge-pink-border: #fbcfe8;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --border: #2e303a;
+    --code-bg: #1f2028;
+    --btn-add-bg: #16a34a;
+    --btn-add-border: #16a34a;
+    --btn-add-text: #fff;
+    --btn-add-bg-hover: #15803d;
+    --btn-add-border-hover: #15803d;
+
+    --color-danger-text: #fecaca;
+    --color-danger-bg: #450a0a;
+    --color-danger-border: #991b1b;
+    --color-danger-input-border: #f87171;
+    --color-danger-field-text: #fca5a5;
+
+    --color-success-text: #bbf7d0;
+    --color-success-bg: #14532d;
+    --color-success-border: #166534;
+    --color-success-surface: #052e16;
+    --color-success-accent: #22c55e;
+
+    --color-valid-border: #4ade80;
+
+    --search-highlight-bg: #854d0e;
+    --search-highlight-text: #fef3c7;
+
+    --badge-blue-text: #bfdbfe;
+    --badge-blue-bg: #172554;
+    --badge-blue-border: #1e40af;
+
+    --badge-teal-text: #a7f3d0;
+    --badge-teal-bg: #064e3b;
+    --badge-teal-border: #065f46;
+
+    --badge-amber-text: #fde68a;
+    --badge-amber-bg: #78350f;
+    --badge-amber-border: #92400e;
+
+    --badge-amber-warm-text: #fed7aa;
+    --badge-amber-warm-bg: #431407;
+    --badge-amber-warm-border: #92400e;
+
+    --badge-orange-text: #fed7aa;
+    --badge-orange-bg: #7c2d12;
+    --badge-orange-border: #9a3412;
+
+    --badge-violet-text: #ddd6fe;
+    --badge-violet-bg: #2e1065;
+    --badge-violet-border: #5b21b6;
+
+    --badge-pink-text: #fbcfe8;
+    --badge-pink-bg: #831843;
+    --badge-pink-border: #9d174d;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+}
+
+#root {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  width: 100%;
+  min-height: 100svh;
+}
+
+h1 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+  font-size: var(--text-2xl);
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+code {
+  font-family: var(--mono);
+  border-radius: 4px;
+  color: var(--text-h);
+  font-size: var(--text-sm);
+  line-height: 135%;
+  padding: 2px 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}

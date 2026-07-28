@@ -1,0 +1,17 @@
+.insured-asset-detail-cell {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  line-height: 1.4;
+  color: var(--text-h);
+}
+
+.insured-asset-detail-cell--empty {
+  color: var(--text);
+}
+
+.insured-asset-detail-cell__inline {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
