@@ -30,11 +30,9 @@ import {
   type AttachmentDraftFieldErrors,
 } from '../Attachments/attachment-draft-utils'
 import { getAttachmentDocumentTypeLabel } from '../Attachments/attachment-form-utils'
+import { InsurancePolicyFormFields } from './InsurancePolicyFormFields'
 import {
-  InsurancePolicyFormFields,
   addOneYearToDateInputValue,
-} from './InsurancePolicyFormFields'
-import {
   buildCreatePayload,
   buildInitialValues,
   validateFormValues,

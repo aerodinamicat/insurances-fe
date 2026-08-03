@@ -82,8 +82,8 @@ Variables disponibles:
 # URL de la API accesible desde el navegador
 VITE_API_URL=http://localhost:3001
 
-# Opcional: clave usada para almacenar el JWT
-VITE_JWT_STORAGE_KEY=insurances.accessToken
+# URL pública opcional cuando Vite se publica mediante un proxy inverso
+WEB_UI_URL=https://insurances-fe-dev.example.com
 ```
 
 Las variables `VITE_*` se incorporan durante el build y son visibles desde el
@@ -129,6 +129,7 @@ npx vitest run src/ruta/componente.test.tsx
 
 | Ruta | Contenido |
 | --- | --- |
+| `/dashboard` | Resumen de altas y modificaciones recientes |
 | `/profile` | Perfil del usuario |
 | `/backoffice/users` | Administración de usuarios |
 | `/catalog/customers` | Clientes y fichas de detalle |
@@ -168,7 +169,7 @@ cabecera `X-Access-Token` expuesta por CORS.
 Para desarrollo local, comprueba que el backend permita el origen de Vite:
 
 ```dotenv
-TRUSTED_DOMAINS=http://localhost:5173
+WEB_UI_URL=http://localhost:5173
 ```
 
 ## Docker

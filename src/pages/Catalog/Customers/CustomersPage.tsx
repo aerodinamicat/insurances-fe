@@ -67,6 +67,12 @@ export function CustomersPage() {
     closeForm: closeFormModal,
     handleDeleteConfirm,
   } = useCatalogCrudPage<CustomerResponse>({ roleRank })
+  const {
+    dialogRef: deleteDialogRef,
+    handleDialogClose: handleDeleteDialogClose,
+    handleDialogCancel: handleDeleteDialogCancel,
+    confirmDialog: deleteConfirmDialog,
+  } = deleteDialog
 
   const canEdit = (roleRank ?? 0) >= EDITOR_RANK
 
@@ -85,6 +91,7 @@ export function CustomersPage() {
   const customerColumns: TableLayoutColumn<CustomerResponse>[] = [
     buildCatalogActionsColumn<CustomerResponse>({
       canEdit,
+      canDelete: canHardDelete,
       view: {
         onClick: (customer) => navigate(`/catalog/customers/${customer.id}`),
       },
@@ -232,10 +239,10 @@ export function CustomersPage() {
       />
 
       <dialog
-        ref={deleteDialog.dialogRef}
+        ref={deleteDialogRef}
         className="catalog-modal catalog-delete-dialog"
-        onClose={deleteDialog.handleDialogClose}
-        onCancel={deleteDialog.handleDialogCancel}
+        onClose={handleDeleteDialogClose}
+        onCancel={handleDeleteDialogCancel}
         aria-labelledby="delete-customer-title"
       >
         <div className="catalog-modal__inner">
@@ -309,7 +316,7 @@ export function CustomersPage() {
           </div>
         </div>
       </dialog>
-      {deleteDialog.confirmDialog}
+      {deleteConfirmDialog}
     </div>
   )
 }

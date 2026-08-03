@@ -11,11 +11,9 @@ import type {
 import { CatalogModal } from '../../../components/CatalogModal'
 import { useCatalogFormErrors } from '../../../hooks/useCatalogFormErrors'
 import { isBuilderSuccessValue } from '../../../types/form-errors'
+import { InsurancePolicyFormFields } from './InsurancePolicyFormFields'
 import {
-  InsurancePolicyFormFields,
   addOneYearToDateInputValue,
-} from './InsurancePolicyFormFields'
-import {
   buildCreatePayload,
   buildInitialValues,
   buildUpdatePayload,

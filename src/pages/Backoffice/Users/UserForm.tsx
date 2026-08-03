@@ -245,20 +245,18 @@ export function UserForm({
 
   useEffect(() => {
     if (mode === 'edit') {
-      setEmailAvailability('idle')
       return
     }
 
     const trimmed = values.email.trim()
     if (!EMAIL_PATTERN.test(trimmed)) {
-      setEmailAvailability('idle')
       return
     }
 
     const requestId = ++emailCheckRequestRef.current
-    setEmailAvailability('checking')
 
     const timeoutId = window.setTimeout(() => {
+      setEmailAvailability('checking')
       void (async () => {
         try {
           const result = await checkUserEmailAvailability(
@@ -288,6 +286,10 @@ export function UserForm({
   }
 
   function updateField<K extends FieldKey>(field: K, value: UserFormValues[K]) {
+    if (field === 'email') {
+      emailCheckRequestRef.current += 1
+      setEmailAvailability('idle')
+    }
     setValues((current) => ({ ...current, [field]: value }))
   }
 

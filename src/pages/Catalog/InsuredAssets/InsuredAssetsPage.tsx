@@ -114,6 +114,12 @@ export function InsuredAssetsPage() {
     isDirty: deletePermanent,
     onClose: resetDeleteDialog,
   })
+  const {
+    dialogRef: deleteDialogRef,
+    handleDialogClose: handleDeleteDialogClose,
+    handleDialogCancel: handleDeleteDialogCancel,
+    confirmDialog: deleteConfirmDialog,
+  } = deleteDialog
 
   const loadCompanies = useCallback(async () => {
     setCompaniesLoadError(null)
@@ -273,6 +279,7 @@ export function InsuredAssetsPage() {
     buildCatalogActionsColumn<InsuredAssetResponse>({
       columnClassName: 'insured-assets-table__actions-col',
       canEdit,
+      canDelete: canHardDelete,
       edit: { onClick: openEditModal },
       delete: { onClick: openDeleteDialog },
     }),
@@ -427,10 +434,10 @@ export function InsuredAssetsPage() {
       />
 
       <dialog
-        ref={deleteDialog.dialogRef}
+        ref={deleteDialogRef}
         className="catalog-modal catalog-delete-dialog"
-        onClose={deleteDialog.handleDialogClose}
-        onCancel={deleteDialog.handleDialogCancel}
+        onClose={handleDeleteDialogClose}
+        onCancel={handleDeleteDialogCancel}
         aria-labelledby="delete-insured-asset-title"
       >
         <div className="catalog-modal__inner">
@@ -487,7 +494,7 @@ export function InsuredAssetsPage() {
           </div>
         </div>
       </dialog>
-      {deleteDialog.confirmDialog}
+      {deleteConfirmDialog}
     </div>
   )
 }

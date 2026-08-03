@@ -128,6 +128,12 @@ export function AttachmentsPage() {
     isDirty: deletePermanent,
     onClose: resetDeleteDialog,
   })
+  const {
+    dialogRef: deleteDialogRef,
+    handleDialogClose: handleDeleteDialogClose,
+    handleDialogCancel: handleDeleteDialogCancel,
+    confirmDialog: deleteConfirmDialog,
+  } = deleteDialog
 
   const customerById = useMemo(() => {
     const map = new Map<string, CustomerResponse>()
@@ -358,6 +364,7 @@ export function AttachmentsPage() {
   const attachmentColumns: TableLayoutColumn<AttachmentResponse>[] = [
     buildCatalogActionsColumn<AttachmentResponse>({
       canEdit,
+      canDelete: canHardDelete,
       edit: { onClick: openEditModal },
       delete: { onClick: openDeleteDialog },
     }),
@@ -560,10 +567,10 @@ export function AttachmentsPage() {
       />
 
       <dialog
-        ref={deleteDialog.dialogRef}
+        ref={deleteDialogRef}
         className="catalog-modal catalog-delete-dialog"
-        onClose={deleteDialog.handleDialogClose}
-        onCancel={deleteDialog.handleDialogCancel}
+        onClose={handleDeleteDialogClose}
+        onCancel={handleDeleteDialogCancel}
         aria-labelledby="delete-attachment-title"
       >
         <div className="catalog-modal__inner">
@@ -620,7 +627,7 @@ export function AttachmentsPage() {
           </div>
         </div>
       </dialog>
-      {deleteDialog.confirmDialog}
+      {deleteConfirmDialog}
     </div>
   )
 }

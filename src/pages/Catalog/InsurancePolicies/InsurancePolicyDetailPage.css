@@ -133,13 +133,8 @@
   color: var(--text);
 }
 
-.policy-detail-documents__row--contract {
-  background: color-mix(in srgb, var(--color-success-text) 8%, transparent);
-}
-
-.policy-detail-documents__contract-badge {
+.policy-detail-documents__type-badge {
   display: inline-block;
-  margin-left: 0.5rem;
   padding: 0.1rem 0.4rem;
   font-size: var(--text-2xs);
   font-weight: 600;
@@ -150,12 +145,6 @@
   border: 1px solid var(--badge-green-border);
   border-radius: 4px;
   vertical-align: middle;
-}
-
-@media (prefers-color-scheme: dark) {
-  .policy-detail-documents__row--contract {
-    background: color-mix(in srgb, var(--color-success-text) 20%, transparent);
-  }
 }
 
 .insurance-policies-table__link {

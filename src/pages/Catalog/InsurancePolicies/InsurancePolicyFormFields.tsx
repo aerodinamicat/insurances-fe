@@ -14,7 +14,6 @@ import { AssuranceCompanyCombobox } from '../components/AssuranceCompanyCombobox
 import { CustomerCombobox } from '../components/CustomerCombobox'
 import {
   POLICY_BRANCHES,
-  addOneYearToDateInputValue,
   type InsurancePolicyFieldErrors,
   type InsurancePolicyFormValues,
 } from './policy-form-utils'
@@ -307,5 +306,3 @@ export function InsurancePolicyFormFields({
     </>
   )
 }
-
-export { addOneYearToDateInputValue }

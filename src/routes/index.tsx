@@ -12,8 +12,16 @@ import {
 import { ProtectedRoute } from './ProtectedRoute'
 import { RoleGate } from './RoleGate'
 import { VIEWER_RANK } from './role-ranks'
+import { PageTitleLayout } from './PageTitleLayout'
 
 const PROFILE_PATH = '/profile'
+const DASHBOARD_PATH = '/dashboard'
+
+const DashboardPage = lazy(() =>
+  import('../pages/Dashboard').then((module) => ({
+    default: module.DashboardPage,
+  })),
+)
 
 const CustomersPage = lazy(() =>
   import('../pages/Catalog/Customers/CustomersPage').then((module) => ({
@@ -90,77 +98,86 @@ function withViewerAccess(element: ReactNode) {
 
 const router = createBrowserRouter([
   {
-    path: '/login',
-    element: <LoginPage />,
-  },
-  {
-    path: '/confirm-email',
-    element: <ConfirmEmailPage />,
-  },
-  {
-    path: '/change-password',
-    element: <ChangePasswordPage />,
-  },
-  {
-    path: '/onboarding',
-    element: <OnboardingPage />,
-  },
-  {
-    element: <ProtectedRoute />,
+    element: <PageTitleLayout />,
     children: [
       {
-        element: <AppLayout />,
+        path: '/login',
+        element: <LoginPage />,
+      },
+      {
+        path: '/confirm-email',
+        element: <ConfirmEmailPage />,
+      },
+      {
+        path: '/change-password',
+        element: <ChangePasswordPage />,
+      },
+      {
+        path: '/onboarding',
+        element: <OnboardingPage />,
+      },
+      {
+        element: <ProtectedRoute />,
         children: [
           {
-            index: true,
-            element: <Navigate to={PROFILE_PATH} replace />,
-          },
-          {
-            path: 'profile',
-            element: <ProfilePage />,
-          },
-          {
-            path: 'backoffice/users',
-            element: (
-              <RoleGate
-                role="Admin"
-                fallback={<Navigate to={PROFILE_PATH} replace />}
-              >
-                <UsersPage />
-              </RoleGate>
-            ),
-          },
-          {
-            path: 'catalog/customers',
-            element: withViewerAccess(<CustomersPage />),
-          },
-          {
-            path: 'catalog/customers/:id',
-            element: withViewerAccess(<CustomerDetailPage />),
-          },
-          {
-            path: 'catalog/assurance-companies',
-            element: withViewerAccess(<AssuranceCompaniesPage />),
-          },
-          {
-            path: 'catalog/contacts',
-            element: withViewerAccess(<ContactsPage />),
-          },
-          {
-            path: 'catalog/insurance-policies',
-            element: withViewerAccess(<InsurancePoliciesPage />),
-          },
-          {
-            path: 'catalog/insurance-policies/:id',
-            element: withViewerAccess(<InsurancePolicyDetailPage />),
-          },
-          {
-            path: 'catalog/insured-assets',
-            element: withViewerAccess(<InsuredAssetsPage />),
-          },
-          {
-            path: 'catalog/attachments',
-            element: withViewerAccess(<AttachmentsPage />),
+            element: <AppLayout />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to={DASHBOARD_PATH} replace />,
+              },
+              {
+                path: 'dashboard',
+                element: withViewerAccess(<DashboardPage />),
+              },
+              {
+                path: 'profile',
+                element: <ProfilePage />,
+              },
+              {
+                path: 'backoffice/users',
+                element: (
+                  <RoleGate
+                    role="Admin"
+                    fallback={<Navigate to={PROFILE_PATH} replace />}
+                  >
+                    <UsersPage />
+                  </RoleGate>
+                ),
+              },
+              {
+                path: 'catalog/customers',
+                element: withViewerAccess(<CustomersPage />),
+              },
+              {
+                path: 'catalog/customers/:id',
+                element: withViewerAccess(<CustomerDetailPage />),
+              },
+              {
+                path: 'catalog/assurance-companies',
+                element: withViewerAccess(<AssuranceCompaniesPage />),
+              },
+              {
+                path: 'catalog/contacts',
+                element: withViewerAccess(<ContactsPage />),
+              },
+              {
+                path: 'catalog/insurance-policies',
+                element: withViewerAccess(<InsurancePoliciesPage />),
+              },
+              {
+                path: 'catalog/insurance-policies/:id',
+                element: withViewerAccess(<InsurancePolicyDetailPage />),
+              },
+              {
+                path: 'catalog/insured-assets',
+                element: withViewerAccess(<InsuredAssetsPage />),
+              },
+              {
+                path: 'catalog/attachments',
+                element: withViewerAccess(<AttachmentsPage />),
+              },
+            ],
           },
         ],
       },

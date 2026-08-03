@@ -41,8 +41,6 @@ export function ChangePasswordPage() {
       return
     }
 
-    setRedirectCountdown(REDIRECT_DELAY_SECONDS)
-
     const countdownTimer = window.setInterval(() => {
       setRedirectCountdown((current) => Math.max(current - 1, 0))
     }, 1000)

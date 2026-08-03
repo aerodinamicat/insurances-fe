@@ -17,6 +17,7 @@ describe('CatalogRowActions', () => {
         item={{ id: '1' }}
         config={{
           canEdit: false,
+          canDelete: false,
           view: { onClick: onView },
           download: { onClick: onDownload },
           edit: { onClick: onEdit },
@@ -35,12 +36,13 @@ describe('CatalogRowActions', () => {
     expect(onView).toHaveBeenCalledWith({ id: '1' })
   })
 
-  it('renders edit and delete when editing is allowed', () => {
+  it('renders edit and delete when their permissions are allowed', () => {
     render(
       <CatalogRowActions
         item={{ id: '1' }}
         config={{
           canEdit: true,
+          canDelete: true,
           edit: { onClick: vi.fn() },
           delete: { onClick: vi.fn() },
         }}
@@ -51,12 +53,32 @@ describe('CatalogRowActions', () => {
     expect(screen.getByRole('button', { name: 'Borrar' })).toBeInTheDocument()
   })
 
+  it('keeps edit available but hides delete for editors', () => {
+    render(
+      <CatalogRowActions
+        item={{ id: '1' }}
+        config={{
+          canEdit: true,
+          canDelete: false,
+          edit: { onClick: vi.fn() },
+          delete: { onClick: vi.fn() },
+        }}
+      />,
+    )
+
+    expect(screen.getByRole('button', { name: 'Editar' })).toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: 'Borrar' }),
+    ).not.toBeInTheDocument()
+  })
+
   it('uses compact table action styling for view and edit', () => {
     render(
       <CatalogRowActions
         item={{ id: '1' }}
         config={{
           canEdit: true,
+          canDelete: false,
           view: { onClick: vi.fn() },
           edit: { onClick: vi.fn() },
         }}
@@ -75,7 +97,7 @@ describe('CatalogRowActions', () => {
     render(
       <CatalogRowActions
         item={{ id: '1' }}
-        config={{ canEdit: false }}
+        config={{ canEdit: false, canDelete: false }}
       />,
     )
 

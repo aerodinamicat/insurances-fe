@@ -1,4 +1,4 @@
-import { useId, useMemo, useState } from 'react'
+import { useId, useState } from 'react'
 import {
   createContact,
   updateContact,
@@ -117,21 +117,12 @@ export function ContactFormModal({
   }
 
   const title = mode === 'create' ? 'Nuevo contacto' : 'Editar contacto'
-  const initialCustomerId = useMemo(
-    () => buildInitialCustomerId(contact, defaultCustomerId),
-    [contact, defaultCustomerId],
-  )
-  const initialDraft = useMemo(
-    () => buildContactDraftFromContact(contact),
-    [contact],
-  )
-  const isDirty = useMemo(
-    () =>
-      customerId !== initialCustomerId ||
-      JSON.stringify(draft.values) !== JSON.stringify(initialDraft.values) ||
-      JSON.stringify(draft.phoneField) !== JSON.stringify(initialDraft.phoneField),
-    [customerId, initialCustomerId, draft, initialDraft],
-  )
+  const initialCustomerId = buildInitialCustomerId(contact, defaultCustomerId)
+  const initialDraft = buildContactDraftFromContact(contact)
+  const isDirty =
+    customerId !== initialCustomerId ||
+    JSON.stringify(draft.values) !== JSON.stringify(initialDraft.values) ||
+    JSON.stringify(draft.phoneField) !== JSON.stringify(initialDraft.phoneField)
 
   const customerFieldError = getVisibleFieldError('customerId', {
     fieldErrors,

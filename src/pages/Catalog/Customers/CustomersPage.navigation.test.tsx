@@ -132,7 +132,7 @@ describe('CustomersPage navigation actions', () => {
     expect(navigateMock).toHaveBeenCalledWith('/catalog/customers/customer-1')
   })
 
-  it('shows only Ver for viewers and full actions for editors', () => {
+  it('shows delete only for managers or higher', () => {
     useAuthMock.mockReturnValue(createAuthMock(1))
     const { unmount } = render(<CustomersPage />)
 
@@ -142,9 +142,16 @@ describe('CustomersPage navigation actions', () => {
 
     unmount()
     useAuthMock.mockReturnValue(createAuthMock(2))
-    render(<CustomersPage />)
+    const editorView = render(<CustomersPage />)
 
     expect(screen.getByRole('button', { name: 'Ver' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Editar' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Borrar' })).not.toBeInTheDocument()
+
+    editorView.unmount()
+    useAuthMock.mockReturnValue(createAuthMock(3))
+    render(<CustomersPage />)
+
     expect(screen.getByRole('button', { name: 'Editar' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Borrar' })).toBeInTheDocument()
   })

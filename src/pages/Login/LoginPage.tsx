@@ -2,6 +2,7 @@ import { type FormEvent, useState } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { getAuthFormErrorState } from '../../api/auth-errors'
 import { useAuth } from '../../auth'
+import { COMPANY_NAME, PROJECT_NAME } from '../../config/branding'
 import {
   FieldFeedback,
   getFieldAriaProps,
@@ -10,7 +11,7 @@ import {
 import '../auth/auth-page.css'
 import './LoginPage.css'
 
-const HOME_PATH = '/profile'
+const HOME_PATH = '/dashboard'
 
 const EMAIL_FIELD_ERROR_ID = 'login-email-error'
 const PASSWORD_FIELD_ERROR_ID = 'login-password-error'
@@ -64,7 +65,9 @@ export function LoginPage() {
     <main className="auth-page">
       <div className="auth-page__card">
         <h1 className="auth-page__title">Sign in</h1>
-        <p className="auth-page__subtitle">Insurances staff portal</p>
+        <p className="auth-page__subtitle">
+          {COMPANY_NAME} · {PROJECT_NAME}
+        </p>
 
         {formError && (
           <div className="auth-alert auth-alert--error" role="alert">

@@ -60,6 +60,12 @@ export function AssuranceCompaniesPage() {
     isDirty: deletePermanent,
     onClose: resetDeleteDialog,
   })
+  const {
+    dialogRef: deleteDialogRef,
+    handleDialogClose: handleDeleteDialogClose,
+    handleDialogCancel: handleDeleteDialogCancel,
+    confirmDialog: deleteConfirmDialog,
+  } = deleteDialog
 
   const loadData = useCallback(async () => {
     setLoadError(null)
@@ -201,6 +207,7 @@ export function AssuranceCompaniesPage() {
   const companyColumns: TableLayoutColumn<AssuranceCompanyResponse>[] = [
     buildCatalogActionsColumn<AssuranceCompanyResponse>({
       canEdit,
+      canDelete: canHardDelete,
       edit: { onClick: openEditDialog },
       delete: { onClick: openDeleteDialog },
     }),
@@ -323,10 +330,10 @@ export function AssuranceCompaniesPage() {
       />
 
       <dialog
-        ref={deleteDialog.dialogRef}
+        ref={deleteDialogRef}
         className="catalog-modal catalog-delete-dialog"
-        onClose={deleteDialog.handleDialogClose}
-        onCancel={deleteDialog.handleDialogCancel}
+        onClose={handleDeleteDialogClose}
+        onCancel={handleDeleteDialogCancel}
         aria-labelledby="delete-assurance-company-title"
       >
         <div className="catalog-modal__inner">
@@ -386,7 +393,7 @@ export function AssuranceCompaniesPage() {
           </div>
         </div>
       </dialog>
-      {deleteDialog.confirmDialog}
+      {deleteConfirmDialog}
     </div>
   )
 }

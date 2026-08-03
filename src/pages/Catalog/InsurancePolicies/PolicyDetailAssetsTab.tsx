@@ -97,6 +97,12 @@ export function PolicyDetailAssetsTab({
     isDirty: deletePermanent,
     onClose: resetDeleteDialog,
   })
+  const {
+    dialogRef: deleteDialogRef,
+    handleDialogClose: handleDeleteDialogClose,
+    handleDialogCancel: handleDeleteDialogCancel,
+    confirmDialog: deleteConfirmDialog,
+  } = deleteDialog
 
   const customerById = useMemo(() => {
     const map = new Map<string, CustomerResponse>()
@@ -114,6 +120,7 @@ export function PolicyDetailAssetsTab({
   const assetColumns: TableLayoutColumn<InsuredAssetResponse>[] = [
     buildCatalogActionsColumn<InsuredAssetResponse>({
       canEdit,
+      canDelete: canHardDelete,
       edit: { onClick: openEditModal },
       delete: { onClick: openDeleteDialog },
     }),
@@ -315,10 +322,10 @@ export function PolicyDetailAssetsTab({
       />
 
       <dialog
-        ref={deleteDialog.dialogRef}
+        ref={deleteDialogRef}
         className="catalog-modal catalog-delete-dialog"
-        onClose={deleteDialog.handleDialogClose}
-        onCancel={deleteDialog.handleDialogCancel}
+        onClose={handleDeleteDialogClose}
+        onCancel={handleDeleteDialogCancel}
         aria-labelledby="delete-policy-asset-title"
       >
         <div className="catalog-modal__inner">
@@ -375,7 +382,7 @@ export function PolicyDetailAssetsTab({
           </div>
         </div>
       </dialog>
-      {deleteDialog.confirmDialog}
+      {deleteConfirmDialog}
     </div>
   )
 }

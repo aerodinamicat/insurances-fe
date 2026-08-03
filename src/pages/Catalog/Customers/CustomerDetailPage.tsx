@@ -55,7 +55,11 @@ export function CustomerDetailPage() {
       return
     }
 
-    void loadCustomer(id)
+    const timeoutId = window.setTimeout(() => {
+      void loadCustomer(id)
+    }, 0)
+
+    return () => window.clearTimeout(timeoutId)
   }, [id, loadCustomer])
 
   const isLoading = isCustomerLoading || isCompaniesLoading

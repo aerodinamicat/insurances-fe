@@ -1,16 +1,6 @@
 import type { ReactNode } from 'react'
-
-import type { TableLayoutColumn } from '../TableLayout/TableLayout'
-
-export const CATALOG_ACTIONS_COLUMN_HEADER = 'Acciones'
-
-export const CATALOG_ROW_ACTION_LABELS = {
-  view: 'Ver',
-  edit: 'Editar',
-  delete: 'Borrar',
-  download: 'Descargar',
-  downloading: 'Descargando…',
-} as const
+import { CATALOG_ROW_ACTION_LABELS } from './catalog-row-actions.constants'
+import './CatalogRowActions.css'
 
 const CATALOG_TABLE_ACTION_BTN_CLASS = 'catalog-table-action-btn'
 const CATALOG_TABLE_DANGER_BTN_CLASS = 'catalog-btn catalog-btn--danger'
@@ -29,6 +19,7 @@ export type CatalogCustomRowAction<T> = {
 
 export type CatalogRowActionsConfig<T> = {
   canEdit: boolean
+  canDelete: boolean
   view?: {
     onClick: (item: T) => void
     label?: string
@@ -79,6 +70,7 @@ export function CatalogRowActions<T>({
 }: CatalogRowActionsProps<T>): ReactNode {
   const {
     canEdit,
+    canDelete,
     view,
     download,
     custom = [],
@@ -164,7 +156,7 @@ export function CatalogRowActions<T>({
     )
   }
 
-  if (deleteAction && canEdit) {
+  if (deleteAction && canDelete) {
     buttons.push(
       <button
         key="delete"
@@ -184,21 +176,4 @@ export function CatalogRowActions<T>({
   }
 
   return <div className="row-actions">{buttons}</div>
-}
-
-export function buildCatalogActionsColumn<T>(
-  config: CatalogRowActionsConfig<T> & { columnClassName?: string },
-): TableLayoutColumn<T> {
-  const { columnClassName, ...actionConfig } = config
-  const actionColumnClassName = ['table-layout__actions', columnClassName]
-    .filter(Boolean)
-    .join(' ')
-
-  return {
-    key: 'actions',
-    header: CATALOG_ACTIONS_COLUMN_HEADER,
-    headerClassName: actionColumnClassName,
-    cellClassName: actionColumnClassName,
-    render: (item) => <CatalogRowActions item={item} config={actionConfig} />,
-  }
 }

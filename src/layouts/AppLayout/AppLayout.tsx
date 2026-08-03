@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom'
+import { AppLayout as AppLayoutShell } from '../../components/AppLayout'
 import { ProcedureLauncherProvider } from '../ProcedureLauncher'
 import { AppAside } from './AppAside'
 import './AppLayout.css'
@@ -6,12 +7,9 @@ import './AppLayout.css'
 export function AppLayout() {
   return (
     <ProcedureLauncherProvider>
-      <div className="app-layout">
-        <AppAside />
-        <main className="app-layout__main">
-          <Outlet />
-        </main>
-      </div>
+      <AppLayoutShell aside={<AppAside />}>
+        <Outlet />
+      </AppLayoutShell>
     </ProcedureLauncherProvider>
   )
 }

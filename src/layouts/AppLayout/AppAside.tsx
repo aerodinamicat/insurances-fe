@@ -1,10 +1,17 @@
 import { NavLink } from 'react-router-dom'
+import projectLogo from '../../assets/logo.png'
 import { useAuth } from '../../auth'
+import {
+  COMPANY_ACRONYM,
+  COMPANY_NAME,
+  PROJECT_NAME,
+} from '../../config/branding'
 import { EDITOR_RANK, RoleGate } from '../../routes/RoleGate'
 import { useProcedureLauncher } from '../ProcedureLauncher'
 import { useMyProfileSummary } from './useMyProfileSummary'
 
 const PROFILE_PATH = '/profile'
+const DASHBOARD_PATH = '/dashboard'
 const USERS_PATH = '/backoffice/users'
 const CATALOG_CUSTOMERS_PATH = '/catalog/customers'
 const CATALOG_ASSURANCE_COMPANIES_PATH = '/catalog/assurance-companies'
@@ -36,10 +43,29 @@ export function AppAside() {
   return (
     <aside className="app-aside" aria-label="Main navigation">
       <div className="app-aside__brand">
-        <span className="app-aside__title">Insurances</span>
+        <img
+          className="app-aside__logo"
+          src={projectLogo}
+          alt={`Logo de ${COMPANY_ACRONYM}`}
+        />
+        <div className="app-aside__brand-copy">
+          <span className="app-aside__title">{COMPANY_ACRONYM}</span>
+          <span className="app-aside__project">{PROJECT_NAME}</span>
+          <span className="app-aside__company">{COMPANY_NAME}</span>
+        </div>
       </div>
 
       <nav className="app-aside__nav">
+        <div className="app-aside__section">
+          <ul className="app-aside__list">
+            <li>
+              <NavLink className="app-aside__link" to={DASHBOARD_PATH} end>
+                Dashboard
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+
         {canRunProcedures && (
           <div className="app-aside__section">
             <span className="app-aside__section-label">Procedimientos</span>

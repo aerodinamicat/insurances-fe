@@ -150,6 +150,24 @@ export function UsersPage() {
     isDirty: false,
     onClose: resetConfirmDialog,
   })
+  const {
+    dialogRef: createDialogRef,
+    handleDialogClose: handleCreateDialogClose,
+    handleDialogCancel: handleCreateDialogCancel,
+    confirmDialog: createConfirmDialog,
+  } = createDialog
+  const {
+    dialogRef: editDialogRef,
+    handleDialogClose: handleEditDialogClose,
+    handleDialogCancel: handleEditDialogCancel,
+    confirmDialog: editConfirmDialog,
+  } = editDialog
+  const {
+    dialogRef: confirmActionDialogRef,
+    handleDialogClose: handleConfirmActionDialogClose,
+    handleDialogCancel: handleConfirmActionDialogCancel,
+    confirmDialog: confirmActionConfirmDialog,
+  } = confirmActionDialog
 
   const loadData = useCallback(async () => {
     setLoadError(null)
@@ -489,6 +507,7 @@ export function UsersPage() {
   const userColumns: TableLayoutColumn<UserResponse>[] = [
       buildCatalogActionsColumn<UserResponse>({
         canEdit: true,
+        canDelete: true,
         custom: [
           {
             label: 'Reenviar onboarding',
@@ -553,7 +572,7 @@ export function UsersPage() {
             </button>
           ),
         getSearchValue: () => '',
-        getSortValue: (user) => (user.loginDisabled ? 1 : 0),
+        getSortValue: (user) => (user.loginDisabled ? '1' : '0'),
       },
       {
         key: 'sessions',
@@ -599,7 +618,7 @@ export function UsersPage() {
         },
         getSearchValue: (user) =>
           user.hasActiveSession ? 'Sesión activa' : 'Sin sesión',
-        getSortValue: (user) => (user.hasActiveSession ? 1 : 0),
+        getSortValue: (user) => (user.hasActiveSession ? '1' : '0'),
       },
       {
         key: 'user',
@@ -734,10 +753,10 @@ export function UsersPage() {
       )}
 
       <dialog
-        ref={createDialog.dialogRef}
+        ref={createDialogRef}
         className="catalog-modal"
-        onClose={createDialog.handleDialogClose}
-        onCancel={createDialog.handleDialogCancel}
+        onClose={handleCreateDialogClose}
+        onCancel={handleCreateDialogCancel}
         aria-labelledby="create-user-title"
       >
         <div className="catalog-modal__inner">
@@ -760,13 +779,13 @@ export function UsersPage() {
           />
         </div>
       </dialog>
-      {createDialog.confirmDialog}
+      {createConfirmDialog}
 
       <dialog
-        ref={editDialog.dialogRef}
+        ref={editDialogRef}
         className="catalog-modal"
-        onClose={editDialog.handleDialogClose}
-        onCancel={editDialog.handleDialogCancel}
+        onClose={handleEditDialogClose}
+        onCancel={handleEditDialogCancel}
         aria-labelledby="edit-user-title"
       >
         <div className="catalog-modal__inner">
@@ -791,13 +810,13 @@ export function UsersPage() {
           )}
         </div>
       </dialog>
-      {editDialog.confirmDialog}
+      {editConfirmDialog}
 
       <dialog
-        ref={confirmActionDialog.dialogRef}
+        ref={confirmActionDialogRef}
         className="catalog-modal catalog-delete-dialog"
-        onClose={confirmActionDialog.handleDialogClose}
-        onCancel={confirmActionDialog.handleDialogCancel}
+        onClose={handleConfirmActionDialogClose}
+        onCancel={handleConfirmActionDialogCancel}
         aria-labelledby="confirm-action-title"
       >
         <div className="catalog-modal__inner">
@@ -848,7 +867,7 @@ export function UsersPage() {
           </div>
         </div>
       </dialog>
-      {confirmActionDialog.confirmDialog}
+      {confirmActionConfirmDialog}
     </div>
   )
 }

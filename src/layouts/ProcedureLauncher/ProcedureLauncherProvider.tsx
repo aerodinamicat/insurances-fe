@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useCallback, useMemo, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CustomerOnboardingWizard } from '../../pages/Catalog/Customers/CustomerOnboardingWizard'
 import { useCustomers } from '../../pages/Catalog/Customers/useCustomers'
@@ -18,7 +18,6 @@ export function ProcedureLauncherProvider({
   const navigate = useNavigate()
   const [customerWizardOpen, setCustomerWizardOpen] = useState(false)
   const [policyWizardOpen, setPolicyWizardOpen] = useState(false)
-  const [launcherError, setLauncherError] = useState<string | null>(null)
 
   const {
     customers,
@@ -35,12 +34,10 @@ export function ProcedureLauncherProvider({
   } = useAssuranceCompanies()
 
   const openCustomerOnboarding = useCallback(() => {
-    setLauncherError(null)
     setCustomerWizardOpen(true)
   }, [])
 
   const openPolicyOnboarding = useCallback(() => {
-    setLauncherError(null)
     setPolicyWizardOpen(true)
     void reloadCustomers()
     void reloadCompanies()
@@ -75,7 +72,6 @@ export function ProcedureLauncherProvider({
   )
 
   const dismissLauncherError = useCallback(() => {
-    setLauncherError(null)
     setPolicyWizardOpen(false)
   }, [])
 
@@ -87,11 +83,7 @@ export function ProcedureLauncherProvider({
     [openCustomerOnboarding, openPolicyOnboarding],
   )
 
-  useEffect(() => {
-    if (policyWizardOpen && policyLoadError) {
-      setLauncherError(policyLoadError)
-    }
-  }, [policyWizardOpen, policyLoadError])
+  const launcherError = policyWizardOpen ? policyLoadError : null
 
   return (
     <ProcedureLauncherContext.Provider value={contextValue}>

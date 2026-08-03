@@ -28,7 +28,7 @@ export type TableLayoutColumn<TItem> = {
   cellClassName?: string
 }
 
-type TableLayoutProps<TItem> = {
+export type TableLayoutProps<TItem> = {
   columns: TableLayoutColumn<TItem>[]
   items: TItem[]
   getItemKey: (item: TItem) => string

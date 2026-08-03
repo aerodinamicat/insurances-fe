@@ -3,7 +3,6 @@ import {
   deleteAttachment,
   downloadAttachment,
   getCatalogApiErrorMessage,
-  updateInsurancePolicy,
 } from '../../../api/catalog'
 import type {
   AttachmentResponse,
@@ -15,15 +14,21 @@ import {
   type TableLayoutColumn,
 } from '../../../components/TableLayout'
 import { buildCatalogActionsColumn } from '../../../components/CatalogRowActions'
-import { formatDisplayDate } from '../../../utils/date'
+import { ViewAttachmentCell } from '../../../components/ViewAttachmentCell/ViewAttachmentCell'
+import {
+  formatDisplayDate,
+  formatRemainingValidity,
+  getRemainingValiditySortKey,
+} from '../../../utils/date'
 import { useGuardedDialog } from '../../../hooks/useGuardedDialog'
 import { EDITOR_RANK, RoleGate } from '../../../routes/RoleGate'
 import { MANAGER_RANK } from '../../../routes/role-ranks'
 import { useCustomers } from '../Customers/useCustomers'
 import { AttachmentEditModal } from '../Attachments/AttachmentEditModal'
+import { AttachmentPreviewModal } from '../Attachments/AttachmentPreviewModal'
 import { AttachmentUploadModal } from '../Attachments/AttachmentUploadModal'
 import {
-  formatByteSize,
+  getAttachmentDocumentTypeLabel,
   isPreviewableMimeType,
 } from '../Attachments/attachment-form-utils'
 import { useAttachments } from '../Attachments/useAttachments'
@@ -37,7 +42,6 @@ type PolicyDetailDocumentsTabProps = {
 
 export function PolicyDetailDocumentsTab({
   policy,
-  onPolicyUpdate,
   onCountChange,
 }: PolicyDetailDocumentsTabProps) {
   const { roleRank } = useAuth()
@@ -75,9 +79,12 @@ export function PolicyDetailDocumentsTab({
   const [actionError, setActionError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isDownloading, setIsDownloading] = useState<string | null>(null)
-  const [linkingContractId, setLinkingContractId] = useState<string | null>(
-    null,
-  )
+  const [isPreviewing, setIsPreviewing] = useState<string | null>(null)
+  const [previewModalOpen, setPreviewModalOpen] = useState(false)
+  const [previewAttachment, setPreviewAttachment] =
+    useState<AttachmentResponse | null>(null)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const [previewError, setPreviewError] = useState<string | null>(null)
   const [deletePermanent, setDeletePermanent] = useState(false)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [feedback, setFeedback] = useState<{
@@ -104,6 +111,12 @@ export function PolicyDetailDocumentsTab({
     isDirty: deletePermanent,
     onClose: resetDeleteDialog,
   })
+  const {
+    dialogRef: deleteDialogRef,
+    handleDialogClose: handleDeleteDialogClose,
+    handleDialogCancel: handleDeleteDialogCancel,
+    confirmDialog: deleteConfirmDialog,
+  } = deleteDialog
 
   function openUploadModal() {
     setUploadModalOpen(true)
@@ -192,21 +205,10 @@ export function PolicyDetailDocumentsTab({
     try {
       const blob = await downloadAttachment(attachment.id)
       const url = URL.createObjectURL(blob)
-
-      if (isPreviewableMimeType(attachment.mimeType)) {
-        const previewWindow = window.open(url, '_blank', 'noopener')
-        if (!previewWindow) {
-          const link = document.createElement('a')
-          link.href = url
-          link.download = attachment.originalFileName
-          link.click()
-        }
-      } else {
-        const link = document.createElement('a')
-        link.href = url
-        link.download = attachment.originalFileName
-        link.click()
-      }
+      const link = document.createElement('a')
+      link.href = url
+      link.download = attachment.originalFileName
+      link.click()
 
       window.setTimeout(() => URL.revokeObjectURL(url), 60_000)
     } catch (caught) {
@@ -222,29 +224,37 @@ export function PolicyDetailDocumentsTab({
     }
   }
 
-  async function handleSetAsContract(attachment: AttachmentResponse) {
-    setLinkingContractId(attachment.id)
+  async function handlePreview(attachment: AttachmentResponse) {
+    setIsPreviewing(attachment.id)
+    setPreviewError(null)
+    setPreviewAttachment(attachment)
+    setPreviewUrl(null)
+    setPreviewModalOpen(true)
     setFeedback(null)
 
     try {
-      const updated = await updateInsurancePolicy(policy.id, {
-        attachedContractId: attachment.id,
-      })
-      onPolicyUpdate(updated)
-      setFeedback({
-        type: 'success',
-        message: `Documento ${attachment.documentCode} establecido como contrato de la póliza.`,
-      })
+      const blob = await downloadAttachment(attachment.id)
+      setPreviewUrl(URL.createObjectURL(blob))
     } catch (caught) {
-      setFeedback({
-        type: 'error',
-        message: getCatalogApiErrorMessage(
+      setPreviewError(
+        getCatalogApiErrorMessage(
           caught,
-          'No se pudo vincular el contrato. Inténtalo de nuevo.',
+          'No se pudo cargar el documento. Inténtalo de nuevo.',
         ),
-      })
+      )
     } finally {
-      setLinkingContractId(null)
+      setIsPreviewing(null)
+    }
+  }
+
+  function closePreviewModal() {
+    setPreviewModalOpen(false)
+    setPreviewAttachment(null)
+    setPreviewError(null)
+
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl)
+      setPreviewUrl(null)
     }
   }
 
@@ -259,62 +269,57 @@ export function PolicyDetailDocumentsTab({
   const attachmentColumns: TableLayoutColumn<AttachmentResponse>[] = [
     buildCatalogActionsColumn<AttachmentResponse>({
       canEdit,
-      download: {
-        onClick: (attachment) => {
-          void handleDownload(attachment)
-        },
-        isLoading: (attachment) => isDownloading === attachment.id,
-      },
-      custom: [
-        {
-          label: (attachment) =>
-            linkingContractId === attachment.id
-              ? 'Vinculando…'
-              : 'Establecer como contrato',
-          onClick: (attachment) => {
-            void handleSetAsContract(attachment)
-          },
-          hidden: (attachment) => policy.attachedContractId === attachment.id,
-          isLoading: (attachment) => linkingContractId === attachment.id,
-          requiresEdit: true,
-        },
-      ],
+      canDelete: canHardDelete,
       edit: { onClick: openEditModal },
       delete: { onClick: openDeleteDialog },
     }),
     {
-      key: 'code',
-      header: 'Código',
-      render: (attachment) => {
-        const isContract = policy.attachedContractId === attachment.id
-
-        return (
-          <>
-            <code className="attachments-table__code">
-              {attachment.documentCode}
-            </code>
-            {isContract && (
-              <span className="policy-detail-documents__contract-badge">
-                Contrato
-              </span>
-            )}
-          </>
-        )
-      },
-    },
-    {
       key: 'file',
       header: 'Archivo',
+      headerClassName: 'table-layout__actions',
+      cellClassName: 'table-layout__actions',
       render: (attachment) => (
-        <>
-          <span className="attachments-table__filename">
-            {attachment.originalFileName}
-          </span>
-          <span className="attachments-table__extension">
-            {attachment.fileExtension.toUpperCase()}
-          </span>
-        </>
+        <ViewAttachmentCell
+          isPreviewable={isPreviewableMimeType(attachment.mimeType)}
+          isLoading={isPreviewing === attachment.id}
+          isDownloading={isDownloading === attachment.id}
+          onView={() => {
+            void handlePreview(attachment)
+          }}
+          onDownload={
+            canEdit
+              ? () => {
+                  void handleDownload(attachment)
+                }
+              : undefined
+          }
+        />
       ),
+      getSearchValue: () => '',
+      getSortValue: () => '',
+    },
+    {
+      key: 'type',
+      header: 'Tipo',
+      render: (attachment) => (
+        <span className="policy-detail-documents__type-badge">
+          {getAttachmentDocumentTypeLabel(attachment.documentType)}
+        </span>
+      ),
+      getSearchValue: (attachment) =>
+        `${getAttachmentDocumentTypeLabel(attachment.documentType)} ${attachment.documentType}`,
+    },
+    {
+      key: 'code',
+      header: 'Código',
+      render: (attachment) =>
+        attachment.documentCode?.trim() ? (
+          <code className="attachments-table__code">
+            {attachment.documentCode}
+          </code>
+        ) : (
+          '—'
+        ),
     },
     {
       key: 'issued-at',
@@ -327,9 +332,14 @@ export function PolicyDetailDocumentsTab({
       render: (attachment) => formatDisplayDate(attachment.expiredAt),
     },
     {
-      key: 'size',
-      header: 'Tamaño',
-      render: (attachment) => formatByteSize(attachment.byteSize),
+      key: 'remaining-validity',
+      header: 'Vigencia restante',
+      headerClassName: 'table-layout__actions',
+      render: (attachment) => formatRemainingValidity(attachment.expiredAt),
+      getSearchValue: (attachment) =>
+        formatRemainingValidity(attachment.expiredAt),
+      getSortValue: (attachment) =>
+        String(getRemainingValiditySortKey(attachment.expiredAt)),
     },
   ]
 
@@ -389,11 +399,6 @@ export function PolicyDetailDocumentsTab({
           columns={attachmentColumns}
           items={attachments}
           getItemKey={(attachment) => attachment.id}
-          getRowClassName={(attachment) =>
-            policy.attachedContractId === attachment.id
-              ? 'policy-detail-documents__row--contract'
-              : undefined
-          }
         />
       )}
 
@@ -414,6 +419,15 @@ export function PolicyDetailDocumentsTab({
         onSuccess={handleUploadSuccess}
       />
 
+      <AttachmentPreviewModal
+        open={previewModalOpen}
+        attachment={previewAttachment}
+        previewUrl={previewUrl}
+        isLoading={isPreviewing !== null}
+        error={previewError}
+        onClose={closePreviewModal}
+      />
+
       <AttachmentEditModal
         key={
           editModalOpen
@@ -430,10 +444,10 @@ export function PolicyDetailDocumentsTab({
       />
 
       <dialog
-        ref={deleteDialog.dialogRef}
+        ref={deleteDialogRef}
         className="catalog-modal catalog-delete-dialog"
-        onClose={deleteDialog.handleDialogClose}
-        onCancel={deleteDialog.handleDialogCancel}
+        onClose={handleDeleteDialogClose}
+        onCancel={handleDeleteDialogCancel}
         aria-labelledby="delete-policy-attachment-title"
       >
         <div className="catalog-modal__inner">
@@ -493,7 +507,7 @@ export function PolicyDetailDocumentsTab({
           </div>
         </div>
       </dialog>
-      {deleteDialog.confirmDialog}
+      {deleteConfirmDialog}
     </div>
   )
 }

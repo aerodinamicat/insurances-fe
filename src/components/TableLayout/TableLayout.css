@@ -172,17 +172,6 @@
   white-space: nowrap;
 }
 
-.row-actions {
-  display: flex;
-  gap: 0.35rem;
-  white-space: nowrap;
-}
-
-.row-actions button {
-  padding: 0.3rem 0.55rem;
-  font-size: var(--text-sm);
-}
-
 .table-layout__empty {
   padding: 2rem 1rem;
   text-align: center;

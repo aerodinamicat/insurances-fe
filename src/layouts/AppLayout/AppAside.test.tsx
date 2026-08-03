@@ -94,12 +94,21 @@ describe('AppAside', () => {
     })
   })
 
-  it('shows only the product brand at the top', async () => {
+  it('shows the corporate and product brand at the top', async () => {
     renderAside()
 
     const brand = document.querySelector('.app-aside__brand')
     expect(brand).toBeTruthy()
-    expect(within(brand!).getByText('Insurances')).toBeInTheDocument()
+    expect(
+      within(brand!).getByRole('img', { name: 'Logo de LLA' }),
+    ).toHaveClass('app-aside__logo')
+    expect(within(brand!).getByText('LLA')).toBeInTheDocument()
+    expect(
+      within(brand!).getByText('Correduría de Seguros'),
+    ).toBeInTheDocument()
+    expect(
+      within(brand!).getByText('López Larios Asesores SL'),
+    ).toBeInTheDocument()
     expect(within(brand!).queryByText('editor@example.com')).not.toBeInTheDocument()
     await screen.findByRole('link', { name: /Ana López/ })
   })
@@ -110,6 +119,31 @@ describe('AppAside', () => {
     expect(
       screen.queryByRole('link', { name: 'Mi perfil' }),
     ).not.toBeInTheDocument()
+  })
+
+  it('renders Dashboard as the first navigation link', () => {
+    renderAside()
+
+    const links = within(screen.getByRole('navigation')).getAllByRole('link')
+    expect(links[0]).toHaveTextContent('Dashboard')
+    expect(links[0]).toHaveAttribute('href', '/dashboard')
+  })
+
+  it.each([
+    ['Viewer', 1],
+    ['Editor', 2],
+    ['Admin', 4],
+  ])('shows Dashboard to the %s role', (role, roleRank) => {
+    useAuthMock.mockReturnValue({
+      ...editorAuth,
+      role,
+      roleRank,
+    })
+    renderAside('/dashboard')
+
+    expect(screen.getByRole('link', { name: 'Dashboard' })).toHaveClass(
+      'active',
+    )
   })
 
   it('orders sections as procedures, catalog, backoffice for admins', async () => {

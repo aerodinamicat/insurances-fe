@@ -90,6 +90,12 @@ export function InsurancePoliciesPage() {
     isDirty: deletePermanent,
     onClose: resetDeleteDialog,
   })
+  const {
+    dialogRef: deleteDialogRef,
+    handleDialogClose: handleDeleteDialogClose,
+    handleDialogCancel: handleDeleteDialogCancel,
+    confirmDialog: deleteConfirmDialog,
+  } = deleteDialog
 
   const customerById = useMemo(() => {
     const map = new Map<string, CustomerResponse>()
@@ -198,6 +204,7 @@ export function InsurancePoliciesPage() {
   const policyColumns: TableLayoutColumn<InsurancePolicyResponse>[] = [
     buildCatalogActionsColumn<InsurancePolicyResponse>({
       canEdit,
+      canDelete: canHardDelete,
       view: {
         onClick: (policy) =>
           navigate(`/catalog/insurance-policies/${policy.id}`),
@@ -358,10 +365,10 @@ export function InsurancePoliciesPage() {
       />
 
       <dialog
-        ref={deleteDialog.dialogRef}
+        ref={deleteDialogRef}
         className="catalog-modal catalog-delete-dialog"
-        onClose={deleteDialog.handleDialogClose}
-        onCancel={deleteDialog.handleDialogCancel}
+        onClose={handleDeleteDialogClose}
+        onCancel={handleDeleteDialogCancel}
         aria-labelledby="delete-insurance-policy-title"
       >
         <div className="catalog-modal__inner">
@@ -421,7 +428,7 @@ export function InsurancePoliciesPage() {
           </div>
         </div>
       </dialog>
-      {deleteDialog.confirmDialog}
+      {deleteConfirmDialog}
     </div>
   )
 }

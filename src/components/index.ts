@@ -7,6 +7,7 @@ export {
   type EmailActionResultProps,
 } from './ActionResult'
 export { CatalogModal, type CatalogModalProps } from './CatalogModal'
+export { AppLayout, type AppLayoutProps } from './AppLayout'
 export {
   CatalogRowActions,
   CATALOG_ACTIONS_COLUMN_HEADER,

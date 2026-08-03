@@ -1,4 +1,4 @@
-import { jwtStorageKey } from '../config/env'
+const JWT_STORAGE_KEY = 'insurances.accessToken'
 
 /** Set while this tab writes JWT storage to ignore echoed storage events. */
 let isWritingAccessToken = false
@@ -9,7 +9,7 @@ export function isAccessTokenWriteInProgress(): boolean {
 
 export function readStoredAccessToken(): string | null {
   try {
-    const value = sessionStorage.getItem(jwtStorageKey)?.trim()
+    const value = sessionStorage.getItem(JWT_STORAGE_KEY)?.trim()
     return value || null
   } catch {
     return null
@@ -19,9 +19,9 @@ export function readStoredAccessToken(): string | null {
 function syncAccessTokenBroadcast(token: string | null): void {
   try {
     if (token) {
-      localStorage.setItem(jwtStorageKey, token)
+      localStorage.setItem(JWT_STORAGE_KEY, token)
     } else {
-      localStorage.removeItem(jwtStorageKey)
+      localStorage.removeItem(JWT_STORAGE_KEY)
     }
   } catch {
     // Ignore quota / private-mode failures; sessionStorage remains authoritative in-tab.
@@ -31,7 +31,7 @@ function syncAccessTokenBroadcast(token: string | null): void {
 export function writeStoredAccessToken(token: string): void {
   isWritingAccessToken = true
   try {
-    sessionStorage.setItem(jwtStorageKey, token)
+    sessionStorage.setItem(JWT_STORAGE_KEY, token)
     syncAccessTokenBroadcast(token)
   } finally {
     isWritingAccessToken = false
@@ -41,7 +41,7 @@ export function writeStoredAccessToken(token: string): void {
 export function clearStoredAccessToken(): void {
   isWritingAccessToken = true
   try {
-    sessionStorage.removeItem(jwtStorageKey)
+    sessionStorage.removeItem(JWT_STORAGE_KEY)
     syncAccessTokenBroadcast(null)
   } finally {
     isWritingAccessToken = false
@@ -54,9 +54,9 @@ export function applyAccessTokenFromStorageEvent(newValue: string | null): void 
   try {
     const token = newValue?.trim()
     if (token) {
-      sessionStorage.setItem(jwtStorageKey, token)
+      sessionStorage.setItem(JWT_STORAGE_KEY, token)
     } else {
-      sessionStorage.removeItem(jwtStorageKey)
+      sessionStorage.removeItem(JWT_STORAGE_KEY)
     }
   } finally {
     isWritingAccessToken = false
@@ -64,5 +64,5 @@ export function applyAccessTokenFromStorageEvent(newValue: string | null): void 
 }
 
 export function isJwtStorageEvent(event: StorageEvent): boolean {
-  return event.key === jwtStorageKey && event.storageArea === localStorage
+  return event.key === JWT_STORAGE_KEY && event.storageArea === localStorage
 }

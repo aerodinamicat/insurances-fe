@@ -159,7 +159,7 @@ describe('InsurancePoliciesPage navigation actions', () => {
     expect(screen.queryByText('Aseguradora Demo')).not.toBeInTheDocument()
   })
 
-  it('shows only Ver for viewers and full actions for editors', async () => {
+  it('shows delete only for managers or higher', async () => {
     useAuthMock.mockReturnValue(createAuthMock(1))
     const { unmount } = render(<InsurancePoliciesPage />)
 
@@ -169,10 +169,17 @@ describe('InsurancePoliciesPage navigation actions', () => {
 
     unmount()
     useAuthMock.mockReturnValue(createAuthMock(2))
-    render(<InsurancePoliciesPage />)
+    const editorView = render(<InsurancePoliciesPage />)
 
     expect(await screen.findByRole('button', { name: 'Ver' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Editar' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Borrar' })).not.toBeInTheDocument()
+
+    editorView.unmount()
+    useAuthMock.mockReturnValue(createAuthMock(3))
+    render(<InsurancePoliciesPage />)
+
+    expect(await screen.findByRole('button', { name: 'Editar' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Borrar' })).toBeInTheDocument()
   })
 })
